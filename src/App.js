@@ -65,7 +65,7 @@ class App extends Component {
 	      "mintedBy": accounts[0],
 	      "mintedAt": moment().unix()
 	    }
-		posts.push(post)
+		posts.unshift(post)
 		this.setState({ posts: posts })
 	  }).catch((e) => {
 	  	console.log('Error mint')
@@ -86,7 +86,6 @@ class App extends Component {
         return postTokenInstance.getAllPosts({from: accounts[0]})
 	  }).then((response) => {
 	  	for (let i = 0; i < response.length; i++) {
-	  		console.log(response[i])
   			postTokenInstance.getPost(response[i], {from: accounts[0]})
   			.then((response) => {
   				let posts = this.state.posts
@@ -96,7 +95,7 @@ class App extends Component {
 		          "mintedBy": response[2].toString(),
 		          "mintedAt": response[3].toString()
 		        }
-  				posts.push(post)
+  				posts.unshift(post)
   				this.setState({ posts: posts })
   			}).catch((e) => {
 			  console.log('Error getPost')
@@ -113,22 +112,41 @@ class App extends Component {
   render() {
   	return (
   		<div>
-	  		<div class="hero is-info is-bold">
-	  			<div class="hero-body">
-	  				<div class="container">
-			 			<h1 class="title">Decentralized BBS</h1>
-			 			<h2 class="subtitle">{this.props.message}</h2>
+	  		<div className="hero is-info is-bold">
+	  			<div className="hero-body">
+	  				<div className="container">
+			 			<h1 className="title">Decentralized BBS</h1>
+			 			<h2 className="subtitle">匿名掲示板</h2>
 		 			</div>
 	 			</div>
 	 		</div>
-	 		<div>
-	 			<form action="javascript:void(0)" onSubmit={this.onSubmit}>
-		 			<input class="input" type="text" placeholder="タイトル" value={this.state.title} onChange={this.onChange}  />
-		 			<textarea class="textarea" placeholder="内容" onChange={this.onTextAreaChange}>{this.state.content}</textarea>
-		 			<input class="button" type="submit" value="投稿する" />
-	 			</form>
-	 		</div>
-	 		<List posts={this.state.posts} />
+	 		<div className="section">
+	 			<div className="container">
+		 			<h3 className="title is-3">投稿フォーム</h3>
+		 			<div className="columns">
+			 			<form className="column is-half box" action="javascript:void(0)" onSubmit={this.onSubmit}>
+			 				<div className="field">
+			 					<label className="label">タイトル</label>
+			 					<div className="control">
+				 					<input className="input" type="text" value={this.state.title} onChange={this.onChange}  />
+			 					</div>
+			 				</div>
+			 				<div className="field">
+			 					<label className="label">本文</label>
+			 					<div className="control">
+				 					<textarea className="textarea" onChange={this.onTextAreaChange} value={this.state.content}></textarea>
+				 				</div>
+			 				</div>
+				 			<input className="button is-primary" type="submit" value="投稿する" />
+			 			</form>
+		 			</div>
+	 			</div>
+ 			</div>
+ 			<div className="section">
+	 			<div className="container">
+ 					<List posts={this.state.posts} />
+				</div>
+			</div>
  		</div>
 	);
   }
