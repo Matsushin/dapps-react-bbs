@@ -20,16 +20,16 @@ contract PostToken is ERC721Token {
   function mint(string _title, string _content) external returns (uint256) {
   	require(msg.sender != address(0));
     Post memory post = Post({
-        title: _title,
-        content: _content,
-        mintedBy: msg.sender,
-        mintedAt: uint64(now)
-      });
-      uint256 tokenId = posts.push(post) - 1;
-      super._mint(msg.sender, tokenId);
+      title: _title,
+      content: _content,
+      mintedBy: msg.sender,
+      mintedAt: uint64(now)
+    });
+    uint256 tokenId = posts.push(post) - 1;
+    super._mint(msg.sender, tokenId);
 
-      Mint(msg.sender, tokenId);
-      return tokenId;
+    Mint(msg.sender, tokenId);
+    return tokenId;
   }
 
   function getPost(uint64 _tokenId) external view returns (string title, string content, address mintedBy, uint64 mintedAt) {

@@ -5,9 +5,9 @@ import PostTokenContract from '../build/contracts/PostToken.json'
 import List from './components/List'
 import getWeb3 from './utils/getWeb3'
 
-type Props = {
-	message: string;
-};
+const contract = require('truffle-contract')
+const postToken = contract(PostTokenContract)
+let postTokenInstance
 
 class App extends Component {
   constructor(props) {
@@ -48,11 +48,7 @@ class App extends Component {
   }
 
   onSubmit() {
-  	const contract = require('truffle-contract')
-    const postToken = contract(PostTokenContract)
-    postToken.setProvider(this.state.web3.currentProvider)
-
-    let postTokenInstance
+  	postToken.setProvider(this.state.web3.currentProvider)
     this.state.web3.eth.getAccounts((error, accounts) => {
       postToken.deployed().then((instance) => {
       	postTokenInstance = instance
@@ -75,11 +71,7 @@ class App extends Component {
   }
 
   updatePosts() {
-  	const contract = require('truffle-contract')
-    const postToken = contract(PostTokenContract)
     postToken.setProvider(this.state.web3.currentProvider)
-
-    let postTokenInstance
     this.state.web3.eth.getAccounts((error, accounts) => {
       postToken.deployed().then((instance) => {
         postTokenInstance = instance
