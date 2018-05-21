@@ -30,7 +30,7 @@ class App extends Component {
       this.setState({
         web3: results.web3
       })
-
+      postToken.setProvider(this.state.web3.currentProvider)
       this.updatePosts()
     })
     .catch((e) => {
@@ -48,7 +48,6 @@ class App extends Component {
   }
 
   onSubmit() {
-  	postToken.setProvider(this.state.web3.currentProvider)
     this.state.web3.eth.getAccounts((error, accounts) => {
       postToken.deployed().then((instance) => {
       	postTokenInstance = instance
@@ -71,7 +70,6 @@ class App extends Component {
   }
 
   updatePosts() {
-    postToken.setProvider(this.state.web3.currentProvider)
     this.state.web3.eth.getAccounts((error, accounts) => {
       postToken.deployed().then((instance) => {
         postTokenInstance = instance
